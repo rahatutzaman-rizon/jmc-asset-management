@@ -1,58 +1,65 @@
 "use client"
 
-
-// pages/clients-reviews.js
 import React, { useState, useEffect } from 'react';
-
-const ClientReviewCard = ({ reviewText, imageUrl }) => {
-  return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white p-6 m-4">
-      <img className="w-24 h-24 rounded-full mx-auto" src={imageUrl} alt="Client photo"/>
-      <p className="text-primary mt-4">{reviewText}</p>
-    </div>
-  );
-};
+import Image from 'next/image';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
 const ClientsReviews = () => {
   const [reviews, setReviews] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    // Replace with your API endpoint
-    fetch('http://localhost:5000/client')
-      .then(response => response.json())
-      .then(data => setReviews(data))
-      .catch(error => console.error('Error fetching reviews:', error));
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/client'); // Replace with your actual API endpoint
+        const data = await response.json();
+        setReviews(data);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
+
+    fetchReviews();
   }, []);
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? reviews.length - 1 : prevIndex - 1));
+    setCurrentIndex((prevIndex) => Math.max(prevIndex - 3, 0));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === reviews.length - 1 ? 0 : prevIndex + 1));
+    setCurrentIndex((prevIndex) => Math.min(prevIndex + 3, reviews.length - 3));
   };
 
   return (
-    <div className="bg-gray-100 p-8">
-      <h2 className="text-3xl font-bold text-center mb-6 text-primary">Clients Reviews</h2>
+    <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
+      <h2 className="text-3xl font-bold text-center mb-8 text-primary">Clients Reviews</h2>
       {reviews.length > 0 && (
-        <div className="flex flex-col items-center">
-          <ClientReviewCard {...reviews[currentIndex]} />
-          <div className="mt-4 flex gap-4">
-            <button 
-              onClick={handlePrev} 
-              className="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark"
-            >
-              Previous
-            </button>
-            <button 
-              onClick={handleNext} 
-              className="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark"
-            >
-              Next
-            </button>
+        <div className="relative max-w-7xl mx-auto flex items-center">
+          <button onClick={handlePrev} className="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <ChevronLeftIcon className="h-6 w-6" />
+          </button>
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
+            {reviews.slice(currentIndex, currentIndex + 3).map((review, index) => (
+              <div
+                key={review._id}
+                className="bg-white border border-primary rounded-lg shadow-md p-6 mx-4 transition-all duration-300 ease-in-out opacity-100"
+              >
+                <div className="flex justify-center mb-4">
+                  <Image
+                    src={review.imageUrl}
+                    alt="Client"
+                    width={80}
+                    height={80}
+                    className="rounded-full"
+                  />
+                </div>
+                <p className="text-gray-600 text-center">{review.reviewText}</p>
+              </div>
+            ))}
           </div>
+          <button onClick={handleNext} className="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <ChevronRightIcon className="h-6 w-6" />
+          </button>
         </div>
       )}
     </div>

@@ -4,9 +4,9 @@ import React from 'react';
 
 const AboutUs = () => {
   return (
-    <div className="mx-auto px-2 sm:px-6 lg:px-8 py-4 mt-8">
+    <div className="mx-auto px-2 sm:px-6 lg:px-8 py-4  bg-gray-100">
       {/* About Us Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center ml-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center ml-12 mt-12">
         {/* Right Side Image */}
        
         {/* Left Side Text */}

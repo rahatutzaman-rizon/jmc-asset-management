@@ -1,37 +1,35 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-
-const projects = {
-  ongoing: [
-   'https://i.ibb.co/g9hg4xR/design1.png',
- 'https://i.ibb.co/KV7jKy6/p12.png',
-'https://i.ibb.co/nk3twp0/p22.png',
-'https://i.ibb.co/BCRNrp2/p2.png',
-'https://i.ibb.co/KVvJT85/p3img.png',
-  ],
-  completed: [
-   'https://i.ibb.co/nk3twp0/p22.png',
-'https://i.ibb.co/BCRNrp2/p2.png',
-'https://i.ibb.co/KVvJT85/p3img.png',
-'https://i.ibb.co/g9hg4xR/design1.png',
- 'https://i.ibb.co/KV7jKy6/p12.png',
-
-  ],
-  upcoming: [
-    'https://i.ibb.co/BCRNrp2/p2.png',
-'https://i.ibb.co/KVvJT85/p3img.png',
-'https://i.ibb.co/g9hg4xR/design1.png',
-  ],
-};
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState('ongoing');
+  const [projects, setProjects] = useState({
+    ongoing: [],
+    completed: [],
+    upcoming: [],
+  });
+
+  useEffect(() => {
+    fetchProjectsData();
+  }, [activeTab]);
+
+  const fetchProjectsData = async () => {
+    try {
+      const response = await fetch('/app/project/api/project.js'); // Fetch from the local API
+      const data = await response.json();
+
+      // Update the state with the images for the active tab
+      setProjects(data);
+    } catch (error) {
+      console.error('Failed to fetch projects:', error);
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center text-blue-600 mb-4">Our Projects</h1>
+      <h1 className="text-3xl font-bold text-center text-primary mb-4">Our Projects</h1>
       <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
         Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
