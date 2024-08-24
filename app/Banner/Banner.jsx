@@ -31,7 +31,7 @@ const Banner = () => {
   };
 
   return (
-    <div className="relative h-[80vh] flex items-center justify-start px-8 md:px-12 lg:px-24">
+    <div className="relative h-[80vh] flex items-center justify-start px-8 md:px-12 lg:px-24 ">
       {/* Background Image Slider */}
       {images.map((img, index) => (
         <Image
@@ -49,24 +49,27 @@ const Banner = () => {
       ))}
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black opacity-30"></div>
+      <div className="absolute inset-0 bg-white opacity-30"></div>
 
       {/* Text Content */}
-      <div className="relative max-w-2xl z-10">
-        <p className="text-lg font-semibold text-primary uppercase tracking-widest">
-          Discover | Dream | Live
-        </p>
-        <h1 className="mt-2 text-6xl font-bold text-primary leading-tight ">
-          Unlock Your Ideal Space
-        </h1>
-        <p className="mt-4 text-lg text-primary">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-          Lorem Ipsum has been the industry's standard dummy text ever since the.
-        </p>
-        <button className="mt-8 px-6 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-blue-100 transition-colors">
-          See More »
-        </button>
-      </div>
+  
+
+      <div className="relative max-w-2xl z-10 ml-24">
+  <p className="text-lg font-semibold text-primary uppercase tracking-widest">
+    Manage | Grow | Prosper
+  </p>
+  <h1 className="mt-2 text-6xl font-bold text-primary leading-tight">
+    Unlock the Potential of Your Assets
+  </h1>
+  <p className="mt-4 text-lg text-primary">
+    Maximize the value of your investments with our comprehensive asset management solutions. 
+    Our expert team is dedicated to helping you achieve sustainable growth and financial success.
+  </p>
+  <button className="mt-8 px-6 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-blue-100 transition-colors">
+    Explore Our Services »
+  </button>
+</div>
+
 
       {/* Navigation Buttons */}
       <button 

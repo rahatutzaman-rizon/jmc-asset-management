@@ -5,34 +5,30 @@ import Image from 'next/image';
 
 export default function Projects() {
   const [activeTab, setActiveTab] = useState('ongoing');
-  const [projects, setProjects] = useState({
-    ongoing: [],
-    completed: [],
-    upcoming: [],
-  });
+  const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     fetchProjectsData();
-  }, [activeTab]);
+  }, []);
 
   const fetchProjectsData = async () => {
     try {
-      const response = await fetch('/app/project/api/project.js'); // Fetch from the local API
+      const response = await fetch('https://jmc-asset-server.vercel.app/projects');
       const data = await response.json();
-
-      // Update the state with the images for the active tab
       setProjects(data);
     } catch (error) {
       console.error('Failed to fetch projects:', error);
     }
   };
 
+  const activeProject = projects.find(project => project.status === activeTab);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-center text-primary mb-4">Our Projects</h1>
       <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+        Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.
       </p>
 
       <div className="flex justify-center space-x-4 mb-8">
@@ -43,7 +39,7 @@ export default function Projects() {
             className={`px-6 py-2 rounded-md flex items-center justify-between min-w-[150px] ${
               activeTab === tab
                 ? 'bg-primary text-white'
-                : 'bg-primary text-white'
+                : 'bg-gray-200 text-gray-700'
             }`}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -60,13 +56,20 @@ export default function Projects() {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {projects[activeTab].map((src, index) => (
-          <div key={index} className="relative h-72 w-full">
-            <Image src={src} alt={`Project ${index + 1}`} layout="fill" objectFit="cover" className="rounded-lg" />
+      {activeProject && (
+        <>
+          <h2 className="text-2xl font-semibold text-center mb-4">
+            {activeProject.status.charAt(0).toUpperCase() + activeProject.status.slice(1)} Projects
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {activeProject.images.map((src, index) => (
+              <div key={index} className="relative h-72 w-full">
+                <Image src={src} alt={`Project ${index + 1}`} layout="fill" objectFit="cover" className="rounded-lg" />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
 
       <div className="text-center mt-8">
         <button className="px-6 py-2 bg-primary text-white border rounded-md">

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -11,7 +11,7 @@ const ClientsReviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch('http://localhost:5000/client'); // Replace with your actual API endpoint
+        const response = await fetch('https://jmc-asset-server.vercel.app/client'); // Replace with your actual API endpoint
         const data = await response.json();
         setReviews(data);
       } catch (error) {
@@ -31,15 +31,15 @@ const ClientsReviews = () => {
   };
 
   return (
-    <div className="bg-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="bg-white py-8 px-4 sm:px-6 lg:px-8">
       <h2 className="text-3xl font-bold text-center mb-8 text-primary">Clients Reviews</h2>
       {reviews.length > 0 && (
-        <div className="relative max-w-7xl mx-auto flex items-center">
+        <div className="relative max-w-6xl mx-auto flex items-center">
           <button onClick={handlePrev} className="bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             <ChevronLeftIcon className="h-6 w-6" />
           </button>
           <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
-            {reviews.slice(currentIndex, currentIndex + 3).map((review, index) => (
+            {reviews.slice(currentIndex, currentIndex + 3).map((review) => (
               <div
                 key={review._id}
                 className="bg-white border border-primary rounded-lg shadow-md p-6 mx-4 transition-all duration-300 ease-in-out opacity-100"
@@ -48,9 +48,9 @@ const ClientsReviews = () => {
                   <Image
                     src={review.imageUrl}
                     alt="Client"
-                    width={80}
-                    height={80}
-                    className="rounded-full"
+                    width={100}
+                    height={100}
+                    className="rounded-full border-4 border-primary"
                   />
                 </div>
                 <p className="text-gray-600 text-center">{review.reviewText}</p>

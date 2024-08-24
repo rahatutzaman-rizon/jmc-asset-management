@@ -1,17 +1,21 @@
 import Image from "next/image";
-import Banner from "./Page/Banner";
+
 import AboutUs from "./about/page";
 import ClientsReviews from "./client/page";
 import Achievement from "./achivement/page";
 import Projects from "./project/page";
+import Banner from "./Banner/Banner";
+import Gallery from "./Gallery/Gallery";
 
 export default function Home() {
   return (
-    <main className=" ">
+    <main className="bg-white ">
      <Banner></Banner>
      <AboutUs></AboutUs>
-     <Achievement></Achievement>
+     
      <Projects></Projects>
+     <Achievement></Achievement>
+     <Gallery></Gallery>
      <ClientsReviews></ClientsReviews>
     </main>
   );
